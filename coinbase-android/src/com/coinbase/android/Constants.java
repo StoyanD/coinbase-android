@@ -6,6 +6,11 @@ public class Constants {
   
   public static final boolean DEBUG_BUILD = false;
   
+  /**
+   * Check to see if preferences are initiated before making calls to them and 
+   * trying to populate objects
+   */
+  public static final String KEY_PREFERENCES_INITIATED = "preferences_initiated";
   public static final String KEY_ACTIVE_ACCOUNT = "active_account";
   public static final String KEY_MAX_ACCOUNT = "max_account";
   

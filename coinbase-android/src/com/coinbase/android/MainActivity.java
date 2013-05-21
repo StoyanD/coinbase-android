@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -31,6 +33,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.coinbase.android.CoinbaseActivity.RequiresAuthentication;
 import com.coinbase.android.CoinbaseActivity.RequiresPIN;
+import com.coinbase.android.db.TransactionsDatabase;
 import com.coinbase.android.merchant.MerchantToolsFragment;
 import com.coinbase.android.merchant.PointOfSaleFragment;
 import com.coinbase.api.LoginManager;
@@ -161,6 +164,7 @@ public class MainActivity extends CoinbaseActivity implements AccountsFragment.P
           getResources().getBoolean(R.bool.pin_sliding_menu) ? SlidingMenuMode.PINNED : SlidingMenuMode.NORMAL;
     }
 
+    initPreferences();
     // Set up the ViewFlipper
     mViewFlipper = (ViewFlipper) findViewById(R.id.flipper);
 
@@ -276,7 +280,26 @@ public class MainActivity extends CoinbaseActivity implements AccountsFragment.P
     onNewIntent(getIntent());
   }
   
-  private void updateMerchantToolsVisibility() {
+  /**
+   * Generate preference keys for {@link LoginActivity}
+   */
+  private void initPreferences() {
+	  Log.e("MainActivity", "initPreferences");
+	  SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	  if(!prefs.contains(Constants.KEY_PREFERENCES_INITIATED)){
+		  Editor e = prefs.edit();
+		  e.putBoolean(Constants.KEY_PREFERENCES_INITIATED, true);
+		  e.putBoolean(String.format(Constants.KEY_ACCOUNT_VALID, -1), false);
+		  e.putString(String.format(Constants.KEY_ACCOUNT_POS_NOTES, -1), "");
+		  e.putBoolean(String.format(Constants.KEY_ACCOUNT_POS_BTC_AMT, -1), false);
+		  e.commit(); 
+		  
+		  TransactionsDatabase db = new TransactionsDatabase(this);
+	  }
+	 
+  }
+
+private void updateMerchantToolsVisibility() {
     
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     int activeAccount = prefs.getInt(Constants.KEY_ACTIVE_ACCOUNT, -1);

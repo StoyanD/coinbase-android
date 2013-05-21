@@ -30,7 +30,7 @@ import com.coinbase.android.Constants;
 import com.coinbase.android.R;
 
 public class LoginManager {
-
+	private static final String TAG = LoginManager.class.getName();
   private static LoginManager INSTANCE = null;
 
   public static LoginManager getInstance() {
@@ -57,14 +57,14 @@ public class LoginManager {
   }
 
   public boolean isSignedIn(Context context) {
-
+	  Log.e(TAG, "isSignedIn");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
     return prefs.getInt(Constants.KEY_ACTIVE_ACCOUNT, -1) > -1;
   }
 
   public String[] getAccounts(Context context) {
-
+	  Log.e(TAG, "getAccounts");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     int numAccounts = prefs.getInt(Constants.KEY_MAX_ACCOUNT, -1) + 1;
 
@@ -81,11 +81,12 @@ public class LoginManager {
   }
 
   public boolean switchActiveAccount(Context context, int index) {
+	  Log.e(TAG, "switchActiveAccount");
     return switchActiveAccount(context, index, null);
   }
 
   public int getAccountId(Context context, int index) {
-
+	  Log.e(TAG, "getAccountId");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     int numAccounts = prefs.getInt(Constants.KEY_MAX_ACCOUNT, -1) + 1;
 
@@ -108,7 +109,7 @@ public class LoginManager {
   }
 
   public boolean switchActiveAccount(Context context, int index, Editor e) {
-
+	  Log.e(TAG, "switchActiveAccount");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     int numAccounts = prefs.getInt(Constants.KEY_MAX_ACCOUNT, -1) + 1;
 
@@ -140,7 +141,7 @@ public class LoginManager {
   }
 
   public int getSelectedAccountIndex(Context context) {
-
+	  Log.e(TAG, "getSelectedAccountIndex");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     int numAccounts = prefs.getInt(Constants.KEY_MAX_ACCOUNT, -1) + 1;
     int activeAccount = prefs.getInt(Constants.KEY_ACTIVE_ACCOUNT, -1);
@@ -162,13 +163,13 @@ public class LoginManager {
   }
 
   public String getAccessToken(Context context, int account) {
-
+	  Log.e(TAG, "getAccessToken");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     return prefs.getString(String.format(Constants.KEY_ACCOUNT_ACCESS_TOKEN, account), null);
   }
 
   public String getAccessToken(Context context) {
-
+	  Log.e(TAG, "getAccessToken");
     if(!isSignedIn(context)) {
       return null;
     }
@@ -180,7 +181,7 @@ public class LoginManager {
   }
 
   public void refreshAccessToken(Context context, int account) {
-
+	  Log.e(TAG, "refreshAccessToken");
     Log.i("Coinbase", "Refreshing access token...");
 
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -218,7 +219,7 @@ public class LoginManager {
 
   // start three legged oauth handshake
   public String generateOAuthUrl(String redirectUrl){
-
+	  Log.e(TAG, "generateOAuthUrl");
     String baseUrl = CLIENT_BASEURL + "/oauth/authorize";
 
     try{
@@ -234,7 +235,7 @@ public class LoginManager {
   // end three legged oauth handshake. (code to tokens)
   // Returns error as human-readable string, or null on success.
   public String addAccountOAuth(Context context, String code, String originalRedirectUrl) {
-
+	  Log.e(TAG, "addAccountOAuth");
     List<BasicNameValuePair> parametersBody = new ArrayList<BasicNameValuePair>();
     parametersBody.add(new BasicNameValuePair("grant_type", "authorization_code"));
     parametersBody.add(new BasicNameValuePair("redirect_uri", originalRedirectUrl));
@@ -285,7 +286,7 @@ public class LoginManager {
   }
 
   private String[] doTokenRequest(Context context, Collection<BasicNameValuePair> params, int account) throws IOException, JSONException {
-
+	  Log.e(TAG, "doTokenRequest");
     DefaultHttpClient client = new DefaultHttpClient();
 
     String baseUrl = CLIENT_BASEURL + "/oauth/token";
@@ -318,14 +319,14 @@ public class LoginManager {
   }
 
   public String getSelectedAccountName(Context context) {
-
+	  Log.e(TAG, "getSelectedAccountName");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     int activeAccount = prefs.getInt(Constants.KEY_ACTIVE_ACCOUNT, -1);
     return prefs.getString(String.format(Constants.KEY_ACCOUNT_NAME, activeAccount), null);
   }
 
   public void setAccountValid(Context context, int accountId, boolean status) {
-
+	  Log.e(TAG, "setAccountValid");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Editor e = prefs.edit();
     e.putBoolean(String.format(Constants.KEY_ACCOUNT_VALID, accountId), status);
@@ -333,12 +334,13 @@ public class LoginManager {
   }
 
   public boolean getAccountValid(Context context, int accountId) {
+	  Log.e(TAG, "getAccountValid");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-    return prefs.getBoolean(String.format(Constants.KEY_ACCOUNT_VALID, accountId), false);
+    return prefs.getBoolean(String.format(Constants.KEY_ACCOUNT_VALID, accountId), false);//TODO fixed
   }
 
   public void deleteCurrentAccount(Context context) {
-
+	  Log.e(TAG, "deleteCurrentAccount");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Editor e = prefs.edit();
 

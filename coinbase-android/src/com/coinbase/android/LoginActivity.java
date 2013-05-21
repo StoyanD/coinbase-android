@@ -26,7 +26,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.coinbase.api.LoginManager;
 
 public class LoginActivity extends CoinbaseActivity {
-
+	private static final String TAG = LoginActivity.class.getName();
   private static final String REDIRECT_URL = "urn:ietf:wg:oauth:2.0:oob";
   public static final String EXTRA_SHOW_INTRO = "show_intro";
 
@@ -137,6 +137,7 @@ public class LoginActivity extends CoinbaseActivity {
         if(pathSegments.size() == 3 && "oauth".equals(pathSegments.get(0)) && "authorize".equals(pathSegments.get(1))) {
           // OAuth redirect - we will handle this.
           String oauthCode = pathSegments.get(2);
+          Log.e(TAG,"oauthCode : " + oauthCode);
           new OAuthCodeTask().execute(oauthCode);
           return true;
         } else if(uri.getPath().startsWith("/transactions") || uri.getPath().isEmpty()) { 
