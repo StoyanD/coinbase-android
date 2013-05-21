@@ -333,9 +333,8 @@ public class LoginManager {
   }
 
   public boolean getAccountValid(Context context, int accountId) {
-
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-    return prefs.getBoolean(String.format(Constants.KEY_ACCOUNT_VALID, accountId), false);
+    return prefs.getBoolean(String.format(Constants.KEY_ACCOUNT_VALID, accountId), true);
   }
 
   public void deleteCurrentAccount(Context context) {
