@@ -64,7 +64,7 @@ public class SlidingPreferenceActivity extends PreferenceActivity implements Sli
 	 */
 	@Override
 	public void setContentView(View v) {
-		setContentView(v, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		setContentView(v, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	}
 
 	/* (non-Javadoc)
@@ -87,7 +87,7 @@ public class SlidingPreferenceActivity extends PreferenceActivity implements Sli
 	 * @see com.slidingmenu.lib.app.SlidingActivityBase#setBehindContentView(android.view.View)
 	 */
 	public void setBehindContentView(View v) {
-		setBehindContentView(v, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		setBehindContentView(v, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	}
 
 	/* (non-Javadoc)

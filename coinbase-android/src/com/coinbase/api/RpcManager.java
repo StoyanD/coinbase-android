@@ -25,11 +25,13 @@ import org.json.JSONTokener;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.coinbase.android.Constants;
 
 
 public class RpcManager {
+	private static final String TAG = RpcManager.class.getName();
 
   private static RpcManager INSTANCE = null;
 
@@ -136,12 +138,14 @@ public class RpcManager {
       }
     }
 
+    
     if(!LoginManager.getInstance().getAccountValid(context, account)) {
       // Don't bother doing the request - this account is not valid
       throw new IOException("Account is not valid");
     }
 
     String accessToken = LoginManager.getInstance().getAccessToken(context, account);
+    Log.e(TAG,"accessToken : " + accessToken);
     request.addHeader("Authorization", String.format("Bearer %s", accessToken));
 
     HttpResponse response = client.execute(request);
