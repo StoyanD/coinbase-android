@@ -289,7 +289,7 @@ public class MainActivity extends CoinbaseActivity implements AccountsFragment.P
 	  if(!prefs.contains(Constants.KEY_PREFERENCES_INITIATED)){
 		  Editor e = prefs.edit();
 		  e.putBoolean(Constants.KEY_PREFERENCES_INITIATED, true);
-		  e.putBoolean(String.format(Constants.KEY_ACCOUNT_VALID, -1), false);
+		  e.putBoolean(String.format(Constants.KEY_ACCOUNT_VALID, -1), true);
 		  e.putString(String.format(Constants.KEY_ACCOUNT_POS_NOTES, -1), "");
 		  e.putBoolean(String.format(Constants.KEY_ACCOUNT_POS_BTC_AMT, -1), false);
 		  e.commit(); 
